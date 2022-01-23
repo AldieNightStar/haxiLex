@@ -6,6 +6,9 @@
 * Create lexer which accepts `s` and returns `obj, 123` (Object and computed length)
 
 # HowTo
+* To lex something, call `lex(string, lexer1, lexer2, ...)`
+	* It will return token-list: `(0, token), (10, token), ...`
+	* Can throw `Exception("Unknown token at sym-pos ...")` if it will found _unknown token_
 * Lexer
 	* Accepts string `s` as argument
 	* Returns `object` and `len` of consumed content
@@ -73,3 +76,7 @@ for tok in lex("abc ab aa 123012 #ThisIsTag #ThisIsTag2 #Tag3 ccc 11 aa", abcLex
 # (50, '11')
 # (53, 'aa')
 ```
+
+# Lex
+
+* `lex(`
