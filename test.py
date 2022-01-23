@@ -27,10 +27,10 @@ class Tag:
 		return f"Tag[{self.name}]"
 
 # This decor says that we parse only values which starts with: "#" or "@"
-# Now it returns Tag(name) class.
 # Better to make all prefixes same size. No need to verify then
 @decorPrefixes("#", "@")
 def tagLexer(s):
+	# This Lexer will return Tag(name) class.
 	sb = []
 	for c in s[1:]:
 		if c in " \t\r\n":
