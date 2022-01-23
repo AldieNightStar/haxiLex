@@ -1,20 +1,3 @@
-# haxiLex - Simple Lexer framework
-
-# Why?
-* Easy to use
-* No complexity
-* Create lexer which accepts `s` and returns `obj, 123` (Object and computed length)
-
-# HowTo
-* Lexer
-	* Accepts string `s` as argument
-	* Returns `object` and `len` of consumed content
-		* For example if we have `abc` then we return `abc` and len `3`: `return 'abc', 3`
-		* Why? Because `len` helps to find out latest lexed position. Also `len` can be different, so you need to return it explicitly
-	* Better to use `sb = []` arrays as string builder: `"".join(sb)`
-
-# Usage
-```py
 from haxiLex import *
 
 # Simple lexer
@@ -72,4 +55,3 @@ for tok in lex("abc ab aa 123012 #ThisIsTag #ThisIsTag2 #Tag3 ccc 11 aa", abcLex
 # (46, 'ccc')
 # (50, '11')
 # (53, 'aa')
-```

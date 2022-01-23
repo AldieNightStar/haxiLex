@@ -17,8 +17,8 @@ def lex(s, *lexers):
 			pos += 1
 			continue
 		res, cnt = __lexArr(s[pos:], lexers)
-		if cnt < 1:
-			break
+		if cnt < 1: # Unknown token
+			raise Exception(f"Unknown token at sym-pos {pos}: {s[pos:pos+10]}")
 		yield (pos, res)
 		pos += cnt
 
