@@ -55,3 +55,14 @@ for tok in lex("abc ab aa 123012 #ThisIsTag #ThisIsTag2 #Tag3 ccc 11 aa", abcLex
 # (46, 'ccc')
 # (50, '11')
 # (53, 'aa')
+
+# Now let's lex only one token
+# It will return token and it's len
+# If token not found, then tok == None and cnt == 0
+tok, cnt = lexOne("abcccbbba 123", [abcLexer, numLexer])
+if cnt > 0:
+	print("The token is: " + tok)
+
+# Will print:
+#
+# The token is: abcccbbba

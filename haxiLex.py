@@ -16,13 +16,13 @@ def lex(s, *lexers):
 		if s[pos] in " \t\r\n":
 			pos += 1
 			continue
-		res, cnt = __lexArr(s[pos:], lexers)
+		res, cnt = lexOne(s[pos:], lexers)
 		if cnt < 1: # Unknown token
 			raise Exception(f"Unknown token at sym-pos {pos}: {s[pos:pos+10]}")
 		yield (pos, res)
 		pos += cnt
 
-def __lexArr(string, lexers):
+def lexOne(string, lexers):
 	for lex in lexers:
 		res, cnt = lex(string)
 		if cnt < 1:
