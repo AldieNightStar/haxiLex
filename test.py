@@ -40,21 +40,25 @@ def tagLexer(s):
 
 
 # Now collect tokens
-for tok in lex("abc ab aa 123012 #ThisIsTag #ThisIsTag2 #Tag3 ccc 11 aa", abcLexer, numLexer, tagLexer):
-	print(tok)
+for tok, cnt in lex("abc ab aa 123012 #ThisIsTag #ThisIsTag2 #Tag3 ccc 11 aa", abcLexer, numLexer, tagLexer):
+	# Let's skip the spaces
+	# All spaces converted to " "
+	if tok == " ": continue
+	# Now let's print actual tokens
+	print(tok, cnt)
 
 # Will print:
 #
-# (0, 'abc')
-# (4, 'ab')
-# (7, 'aa')
-# (10, '123012')
-# (17, Tag[ThisIsTag])
-# (28, Tag[ThisIsTag2])
-# (40, Tag[Tag3])
-# (46, 'ccc')
-# (50, '11')
-# (53, 'aa')
+# abc 3
+# ab 2
+# aa 2
+# 123012 6
+# Tag[ThisIsTag] 10
+# Tag[ThisIsTag2] 11
+# Tag[Tag3] 5
+# ccc 3
+# 11 2
+# aa 2
 
 # Now let's lex only one token
 # It will return token and it's len

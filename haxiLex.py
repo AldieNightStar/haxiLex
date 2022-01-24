@@ -14,12 +14,13 @@ def lex(s, *lexers):
 		if pos >= len(s):
 			break
 		if s[pos] in " \t\r\n":
+			yield " ", 1
 			pos += 1
 			continue
 		res, cnt = lexOne(s[pos:], lexers)
 		if cnt < 1: # Unknown token
 			raise Exception(f"Unknown token at sym-pos {pos}: {s[pos:pos+10]}")
-		yield (pos, res)
+		yield res, cnt
 		pos += cnt
 
 def lexOne(string, lexers):
