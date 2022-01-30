@@ -1,5 +1,12 @@
 import re
 
+class Regex:
+    def __init__(self, name, t) -> None:
+        self.pattern = re.compile(t)
+        self.name = name
+    def match(self, s):
+        return self.pattern.match(s)
+
 def decorPrefixes(*prefixes):
 	def deco(f):
 		def wrp(s):
@@ -34,13 +41,13 @@ def lexOne(string, lexers):
 					return lexStr, len(lexStr)
 				return None, 0
 			lex=lx
-		elif type(lex) is re.Pattern:
-			pattern = lex
+		elif type(lex) is Regex:
+			regex = lex
 			def lx(s):
-				m = pattern.match(s)
+				m = regex.match(s)
 				if m == None:
 					return None, 0
-				return m, len(m.group(0))
+				return (regex.name, m), len(m.group(0))
 			lex = lx
 		res, cnt = lex(string)
 		if cnt < 1:
