@@ -93,4 +93,24 @@ if cnt > 0:
 # Will print:
 #
 # The token is: abcccbbba
+
+
+
+
+
+
+# Now let's try next:
+# What if lexer could be a string?
+# This could help us to indentify couple of keywords without creating lexers
+# Let's say that words be: 'export', 'import', 'call'
+for tok, cnt in lex("export abbc call 11111", "export", "import", "call", abcLexer, numLexer):
+	# Skip all the spaces
+	if tok == " ": continue
+	print(tok)
+# Will output:
+#
+# export
+# abbc
+# call
+# 11111
 ```
