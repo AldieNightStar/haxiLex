@@ -1,3 +1,5 @@
+import re
+
 def decorPrefixes(*prefixes):
 	def deco(f):
 		def wrp(s):
@@ -32,7 +34,15 @@ def lexOne(string, lexers):
 					return lexStr, len(lexStr)
 				return None, 0
 			lex=lx
-		
+		elif type(lex) is re.Pattern:
+			pattern = lex
+			def lx(s):
+				m = pattern.match(s)
+				if m == None:
+					return None, 0
+				result = m.group(0)
+				return result, len(result)
+			lex = lx
 		res, cnt = lex(string)
 		if cnt < 1:
 			continue

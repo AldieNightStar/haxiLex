@@ -7,15 +7,15 @@
 
 # HowTo
 * To lex something, call `lex(string, lexer1, lexer2, ...)`
-	* It will return token-list: `(0, token), (10, token), ...`
+	* It will return token-list
 	* Can throw `Exception("Unknown token at sym-pos ...")` if it will found _unknown token_
 * Lexer
-	* Accepts string `s` as argument
+	* Accepts string `s: string` as an argument
 	* Returns `object` and `len` of consumed content
 		* For example if we have `abc` then we return `abc` and len `3`: `return 'abc', 3`
 		* Why? Because `len` helps to find out latest lexed position. Also `len` can be different, so you need to return it explicitly
 	* Better to use `sb = []` arrays as string builder: `"".join(sb)`
-    * Also lexer could be a `string`. Just to match
+    * Lexer could be a `string` or an _regex_. Just to match
 * Also you can do recursive lexing. Just use `lexOne(src, lexers)`, where `src` is a string and `lexers` is a list of lexers
 	* It will return `obj, len` if lexer found token, otherwise `None, 0`
 
@@ -113,6 +113,22 @@ for tok, cnt in lex("export abbc call 11111", "export", "import", "call", abcLex
 # abbc
 # call
 # 11111
+
+
+
+
+# Also we can try to use RegExp as an lexer
+for tok, cnt in lex("#Hello #Hi #HashTag3 123", re.compile("\\#[a-zA-Z0-9\\_]*"), numLexer):
+	# Skip the spaces
+	if tok == " ": continue
+	print(tok)
+
+# Will print out:
+#
+# #Hello
+# #Hi
+# #HashTag3
+# 123
 ```
 
 # Create lexers

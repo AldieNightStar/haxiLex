@@ -1,4 +1,5 @@
 from haxiLex import *
+import re
 
 # Simple lexer
 def abcLexer(s):
@@ -86,3 +87,19 @@ for tok, cnt in lex("export abbc call 11111", "export", "import", "call", abcLex
 # abbc
 # call
 # 11111
+
+
+
+
+# Also we can try to use RegExp as an lexer
+for tok, cnt in lex("#Hello #Hi #HashTag3 123", re.compile("\\#[a-zA-Z0-9\\_]*"), numLexer):
+	# Skip the spaces
+	if tok == " ": continue
+	print(tok)
+
+# Will print out:
+#
+# #Hello
+# #Hi
+# #HashTag3
+# 123
