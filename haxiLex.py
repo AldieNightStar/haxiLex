@@ -25,6 +25,13 @@ def lex(s, *lexers):
 
 def lexOne(string, lexers):
 	for lex in lexers:
+		if type(lex) is str:
+			lexStr = lex
+			def lx(s):
+				if s.startswith(lexStr):
+					return lexStr, len(lexStr)
+				return None, 0
+			lex=lx
 		res, cnt = lex(string)
 		if cnt < 1:
 			continue

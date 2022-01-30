@@ -15,6 +15,7 @@
 		* For example if we have `abc` then we return `abc` and len `3`: `return 'abc', 3`
 		* Why? Because `len` helps to find out latest lexed position. Also `len` can be different, so you need to return it explicitly
 	* Better to use `sb = []` arrays as string builder: `"".join(sb)`
+    * Also lexer could be a `string`. Just to match
 * Also you can do recursive lexing. Just use `lexOne(src, lexers)`, where `src` is a string and `lexers` is a list of lexers
 	* It will return `obj, len` if lexer found token, otherwise `None, 0`
 
