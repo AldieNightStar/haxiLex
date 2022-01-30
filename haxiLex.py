@@ -40,8 +40,7 @@ def lexOne(string, lexers):
 				m = pattern.match(s)
 				if m == None:
 					return None, 0
-				result = m.group(0)
-				return result, len(result)
+				return m, len(m.group(0))
 			lex = lx
 		res, cnt = lex(string)
 		if cnt < 1:

@@ -90,16 +90,26 @@ for tok, cnt in lex("export abbc call 11111", "export", "import", "call", abcLex
 
 
 
-
 # Also we can try to use RegExp as an lexer
-for tok, cnt in lex("#Hello #Hi #HashTag3 123", re.compile("\\#[a-zA-Z0-9\\_]*"), numLexer):
+# To identify token we need to check token type is `re.Match`
+for tok, cnt in lex("#Hello #Hi #HashTag3 123", re.compile("\\#([a-zA-Z0-9\\_]*)"), numLexer):
 	# Skip the spaces
 	if tok == " ": continue
+	# Print out the tokens
+	if type(tok) is re.Match:
+		# Print out the token info
+		#   tok.group(0) - is all matched text
+		#   tok.group(1) - is a captured group by () in regexp
+		# so we getting tok.group(1) as in regexp we have ()
+		print("Token: ", tok.group(1))
+		continue
+	# Print other tokens
 	print(tok)
 
-# Will print out:
+
+# This will print:
 #
-# #Hello
-# #Hi
-# #HashTag3
+# Token:  Hello
+# Token:  Hi
+# Token:  HashTag3
 # 123
