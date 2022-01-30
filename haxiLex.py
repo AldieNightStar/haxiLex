@@ -32,6 +32,7 @@ def lexOne(string, lexers):
 					return lexStr, len(lexStr)
 				return None, 0
 			lex=lx
+		
 		res, cnt = lex(string)
 		if cnt < 1:
 			continue

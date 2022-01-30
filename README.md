@@ -114,3 +114,15 @@ for tok, cnt in lex("export abbc call 11111", "export", "import", "call", abcLex
 # call
 # 11111
 ```
+
+# Create lexers
+## Create functions
+```py
+def mylexer(s):
+	builder=[]
+	for i in s:
+		if i == " ":
+			break
+		builder.append(i)
+	return "".join(builder), len(builder)
+```
