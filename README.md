@@ -124,12 +124,12 @@ for tok, cnt in lex("export abbc call 11111", "export", "import", "call", abcLex
 for tok, cnt in lex("#Hello #Hi #HashTag3 123", Regex("Tag", "\\#([a-zA-Z0-9\\_]*)"), numLexer):
 	# Skip the spaces
 	if tok == " ": continue
-    # If token is tuple like ("Tag", ...)
+	# If token is tuple like ("Tag", ...)
 	if type(tok) is tuple and tok[0] == "Tag":
 		# Print out the token info
 		#   tok[1].group(0) - is all matched text
 		#   tok[1].group(1) - is a captured group by () in regexp
-		# so we getting tok.group(1) as in regexp we have ()
+		# so we getting tok[1].group(1) as in regexp we have ()
 		print("Token: ", tok[1].group(1))
 		continue
 	# Print the other tokens
