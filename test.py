@@ -89,8 +89,8 @@ for tok, cnt in lex("export abbc call 11111", "export", "import", "call", abcLex
 # 11111
 
 
-# Also we can try to use RegExp as an lexer
-# To identify token we need to check token type is `re.Match`
+# Also we can try to use Regex(name, str) as an lexer
+# To identify token we need to check token is ("Tag", ...)
 for tok, cnt in lex("#Hello #Hi #HashTag3 123", Regex("Tag", "\\#([a-zA-Z0-9\\_]*)"), numLexer):
 	# Skip the spaces
 	if tok == " ": continue
