@@ -1,5 +1,4 @@
 from haxiLex import *
-import re
 
 # Simple lexer
 def abcLexer(s):
@@ -113,3 +112,46 @@ for tok, cnt in lex("#Hello #Hi #HashTag3 123", Regex("\\#([a-zA-Z0-9\\_]*)", su
 # The tag: Hi
 # The tag: HashTag3
 # Other token 123
+
+
+
+
+
+# Lexers combinations
+# -------------------
+
+
+
+
+# Lexes: abc.abc
+abcLexer = Regex("[abc]*", supplyGroup(0, "abc")).asLexer()
+dotLexer = lexAnd(abcLexer, lexFromStr("."), abcLexer)
+for tok, cnt in lex("aaabbbcccc.ababab bbbb.aaa", dotLexer):
+    # Skip the spaces
+    if tok == " ": continue
+    print(tok)
+
+# Output is:
+#
+# [('abc', 'aaabbbcccc'), '.', ('abc', 'ababab')]
+# [('abc', 'bbbb'), '.', ('abc', 'aaa')]
+
+
+
+
+# Lexes abc or #123
+abcLexer = Regex("[abc]*", supplyGroup(0, "abc")).asLexer()
+lexer123 = Regex("[123]*", supplyGroup(0, "123")).asLexer()
+hashLex  = lexFromStr("#")
+abcOrHashLexer = lexOr(lexAnd(hashLex, lexer123), abcLexer)
+for tok, cnt in lex("abc #12 abc #1", abcOrHashLexer):
+    # Skip the spaces
+    if tok == " ": continue
+    print(tok)
+
+# Output is:
+#
+# ('abc', 'abc')
+# ['#', ('123', '12')]
+# ('abc', 'abc')
+# ['#', ('123', '1')]

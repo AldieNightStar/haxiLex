@@ -11,7 +11,46 @@ class Regex:
         if self.supplier != None:
             return self.supplier(m), m
         return None, m
-    
+    def asLexer(self):
+        def lx(s):
+            supplied, m = self.match(s)
+            if m == None:
+                return None, 0
+            LEN = len(m.group(0))
+            if supplied == None:
+                return m, LEN
+            return supplied, LEN
+        return lx
+
+def lexFromStr(string, name="undef"):
+    def lx(s):
+        if s.startswith(string):
+            return (name, string), len(string)
+        return None, 0
+    return lx
+
+def lexAnd(*lexers):
+    def lx(s):
+        arr = []
+        pos = 0
+        for l in lexers:
+            res, cnt = l(s[pos:])
+            if cnt < 1:
+                return None, 0
+            pos += cnt
+            arr.append(res)
+        return arr, pos
+    return lx
+
+def lexOr(*lexers):
+    def lx(s):
+        for l in lexers:
+            res, cnt = l(s)
+            if cnt < 1:
+                continue
+            return res, cnt
+    return lx
+
 def supplyGroup(n, name="undef"):
     def supp(m):
         try:
@@ -48,23 +87,9 @@ def lex(s, *lexers):
 def lexOne(string, lexers):
     for lex in lexers:
         if type(lex) is str:
-            lexStr = lex
-            def lx(s):
-                if s.startswith(lexStr):
-                    return lexStr, len(lexStr)
-                return None, 0
-            lex=lx
+            lex=lexFromStr(lex)
         elif type(lex) is Regex:
-            regex = lex
-            def lx(s):
-                supplied, m = regex.match(s)
-                if m == None:
-                    return None, 0
-                LEN = len(m.group(0))
-                if supplied == None:
-                    return m, LEN
-                return supplied, LEN
-            lex = lx
+            lex = lex.asLexer()
         res, cnt = lex(string)
         if cnt < 1:
             continue
